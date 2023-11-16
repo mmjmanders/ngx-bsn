@@ -3,7 +3,7 @@ export default {
   displayName: 'ngx-bsn',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/ngx-bsn',
+  coverageDirectory: '../../coverage/libs/ngx-bsn',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
