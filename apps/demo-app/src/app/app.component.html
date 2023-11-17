@@ -1,0 +1,58 @@
+<nav
+  class="navbar navbar-expand bg-dark border-bottom border-body"
+  data-bs-theme="dark"
+>
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <fa-icon [icon]="['fas', 'id-card']"></fa-icon>
+      ngx-bsn
+    </a>
+    <div class="d-flex">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="https://github.com/mmjmanders/ngx-bsn">
+          <fa-icon [icon]="['fab', 'github']" size="xl"></fa-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+<main class="container">
+  <section>
+    <h1>ngx-bsn</h1>
+    <p>An Angular directive to validate Dutch BSN numbers.</p>
+  </section>
+  <section>
+    <h2>Installation</h2>
+    <p>Install <code>ngx-bsn</code> using your favorite package manager.</p>
+  </section>
+  <section class="row">
+    <h2>Usage</h2>
+    <div>
+      <pre><code class="language-typescript">import &#x007b; BsnDirective &#x007d; from 'ngx-bsn';
+
+&#x0040;Component(&#x007b;
+  imports: [BsnDirective]
+&#x007d;)
+</code></pre>
+    </div>
+    <div>
+      <pre><code class="language-html">&lt;input type="text" ngxBsn&gt;</code></pre>
+    </div>
+  </section>
+  <section class="row">
+    <h2>Demo</h2>
+    <div class="col-6">
+      <label class="form-label" for="bsn">BSN</label>
+      <input
+        [class.is-invalid]="bsn.invalid"
+        [class.is-valid]="bsn.value && bsn.valid"
+        [formControl]="bsn"
+        class="form-control"
+        id="bsn"
+        ngxBsn
+        placeholder="Enter BSN..."
+        type="text"
+      />
+    </div>
+  </section>
+</main>

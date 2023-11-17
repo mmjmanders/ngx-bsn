@@ -1,15 +1,18 @@
-name: test
+name: pages
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/demo-app/**'
+      - 'libs/ngx-bsn/**'
 
 jobs:
-  test:
+  pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -28,15 +31,14 @@ jobs:
         run: |
           pnpm i --prefer-offline --frozen-lockfile
 
-      - name: Set SHAs for nx affected
-        uses: nrwl/nx-set-shas@v4
-
-      - name: Install Playwright Browsers
+      - name: Build demo-app
         run: |
-          pnpm exec playwright install --with-deps
+          pnpm exec nx run demo-app:build
 
-      - name: Test
-        run: |
-          pnpm exec nx affected -t lint
-          pnpm exec nx affected -t test
-          pnpm exec nx affected -t e2e
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          build_dir: ./dist/apps/demo-app/browser
+          committer: Mark Manders <mmjmanders@gmail.com>
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
