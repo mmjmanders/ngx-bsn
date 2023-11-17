@@ -6,6 +6,7 @@ on:
     paths:
       - 'apps/demo-app/**'
       - 'libs/ngx-bsn/**'
+      - '.github/workflows/pages.yml'
 
 jobs:
   pages:
@@ -33,7 +34,7 @@ jobs:
 
       - name: Build demo-app
         run: |
-          pnpm exec nx run demo-app:build
+          pnpm exec nx run demo-app:build --baseHref /ngx-bsn/
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
