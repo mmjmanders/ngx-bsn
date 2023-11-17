@@ -1,0 +1,41 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 'latest'
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+
+      - name: Install dependencies
+        run: |
+          pnpm i --prefer-offline --frozen-lockfile
+
+      - name: Build package
+        run: |
+          pnpm exec nx run ngx-bsn:build
+
+      - name: Publish package
+        run: |
+          cp -v README.md LICENSE.md ./dist/libs/ngx-bsn
+          pnpm publish ./dist/libs/ngx-bsn --access public --no-git-checks --force
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
