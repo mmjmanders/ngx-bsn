@@ -9,7 +9,7 @@ on:
       - '.github/workflows/pages.yml'
 
 jobs:
-  pages:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -32,14 +32,26 @@ jobs:
         run: |
           pnpm i --prefer-offline --frozen-lockfile
 
-      - name: Build demo-app
+      - name: Build static files
+        id: build
         run: |
           pnpm exec nx run demo-app:build --baseHref /ngx-bsn/
 
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v4
+      - name: Upload static files as artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          build_dir: ./dist/apps/demo-app/browser
-          committer: Mark Manders <mmjmanders@gmail.com>
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: 'dist/apps/demo-app/browser/'
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
