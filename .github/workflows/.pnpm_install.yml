@@ -24,7 +24,7 @@ jobs:
         if: ${{ inputs.with_cache }}
         with:
           path: |
-            ~/.pnpm-store
+            ./.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-
 

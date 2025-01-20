@@ -28,7 +28,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: |
-            ~/.pnpm-store
+            ./.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
       - run: |
           pnpm i --prefer-offline --frozen-lockfile
