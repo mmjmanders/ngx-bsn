@@ -12,7 +12,6 @@ import xml from 'highlight.js/lib/languages/xml';
 import typescript from 'highlight.js/lib/languages/typescript';
 
 @Component({
-  standalone: true,
   imports: [FontAwesomeModule, BsnDirective, ReactiveFormsModule],
   selector: 'ngx-bsn-root',
   templateUrl: './app.component.html',
